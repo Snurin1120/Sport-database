@@ -1,0 +1,183 @@
+DROP TABLE Player CASCADE CONSTRAINTS;
+DROP TABLE Sport CASCADE CONSTRAINTS;
+DROP TABLE Team CASCADE CONSTRAINTS;
+DROP TABLE Coach CASCADE CONSTRAINTS;
+
+CREATE TABLE Sport
+(SportID 	VARCHAR(4) not null,
+ SportName 	VARCHAR2(15) not null,
+ Venue 		VARCHAR2(30) not null,
+ Equipment 	VARCHAR2(10),
+ CONSTRAINT Sport_SportID_PK PRIMARY KEY(SportID)
+);
+
+CREATE TABLE Team
+(TeamID 	VARCHAR(4) not null,
+ TeamName 	VARCHAR2(20) not null,
+ SportID 	VARCHAR(4) not null,
+ CONSTRAINT Team_TeamID_PK PRIMARY KEY(TeamID),
+ CONSTRAINT Team_SportID_FK FOREIGN KEY(SportID)
+		REFERENCES Sport ON DELETE CASCADE
+);
+
+
+CREATE TABLE Coach
+(CoachID 	VARCHAR(4) not null,
+ CoachFname 	VARCHAR2(10) not null,
+ CoachLname 	VARCHAR2(10) not null,
+ CoachTeamID 	VARCHAR(4) not null,
+ CONSTRAINT Coach_CoachID_PK PRIMARY KEY(CoachID),
+ CONSTRAINT Coach_CoachTeamID_FK FOREIGN KEY(CoachTeamID)
+ REFERENCES Team ON DELETE CASCADE
+);
+
+CREATE TABLE Player
+(MatricNo 	NUMBER(7) not null,
+ PlayerID 	VARCHAR(4) not null,
+ PlayerFname 	VARCHAR2(10) not null,
+ PlayerLname 	VARCHAR2(10) not null,
+ PlayerTeamID 	VARCHAR(4),
+ CoachID 	VARCHAR(4),
+ SportID 	VARCHAR(4),
+ CONSTRAINT Player_PlayerID_PK PRIMARY KEY(PlayerID),
+ CONSTRAINT Player_PlayerTeamID_FK FOREIGN KEY(PlayerTeamID)
+ REFERENCES Team(TeamID) ON DELETE CASCADE,
+ CONSTRAINT Player_CoachID_FK FOREIGN KEY(CoachID)
+ REFERENCES Coach(CoachID),
+ CONSTRAINT Player_SportID_FK FOREIGN KEY(SportID)
+ REFERENCES Sport(SportID)
+);
+
+INSERT INTO Sport VALUES ('SP01' , 'Football', 'Field A' , 'Ball'); 
+
+INSERT INTO Sport VALUES ('SP02' , 'Basketball', 'Outdoor Court 1' , 'Ball'); 
+
+INSERT INTO Sport VALUES ('SP03' , 'Badminton', 'Badminton Court' , 'Racket'); 
+
+INSERT INTO Sport VALUES ('SP04' , 'Tennis', 'Tennis Court' , 'Racket'); 
+
+INSERT INTO Sport VALUES ('SP05' , 'Swimming', 'Swimming Pool' , 'None'); 
+
+INSERT INTO Sport VALUES ('SP06' , 'Volleyball', 'Indoor Court 1' , 'Ball'); 
+
+INSERT INTO Sport VALUES ('SP07' , 'Rugby', 'Field B' , 'Ball'); 
+
+INSERT INTO Sport VALUES ('SP08' , 'Hockey', 'Hockey Turf' , 'Stick'); 
+
+INSERT INTO Sport VALUES ('SP09' , 'Athletics', 'Stadium' , NULL); 
+
+INSERT INTO Sport VALUES ('SP10' , 'Netball', 'Indoor Court 1' , 'Ball'); 
+
+INSERT INTO Sport VALUES ('SP11' , 'SepakTakraw', 'Indoor Court 2' , 'Ball'); 
+
+INSERT INTO Sport VALUES ('SP12' , 'Squash', 'Squash Court' , 'Racket'); 
+
+INSERT INTO Sport VALUES ('SP13' , 'Handball', 'Indoor Court 2' , 'Ball'); 
+
+INSERT INTO Sport VALUES ('SP14' , 'Petanque', 'Petanque Arena' , 'Boules'); 
+
+INSERT INTO Sport VALUES ('SP15' , 'Cricket', 'Mini Oval' , 'Bat'); 
+
+INSERT INTO Team VALUES ('TM01' , 'Red Lions', 'SP01'); 
+
+INSERT INTO Team VALUES ('TM02' , 'The Warriors', 'SP02'); 
+
+INSERT INTO Team VALUES ('TM03' , 'Golden Eagles', 'SP03'); 
+
+INSERT INTO Team VALUES ('TM04' , 'Silver Foxes', 'SP04'); 
+
+INSERT INTO Team VALUES ('TM05' , 'Aqua Dolphins', 'SP05'); 
+
+INSERT INTO Team VALUES ('TM06' , 'Spike Masters', 'SP06'); 
+
+INSERT INTO Team VALUES ('TM07' , 'Rugby Titans', 'SP07'); 
+
+INSERT INTO Team VALUES ('TM08' , 'Black Dragons', 'SP08'); 
+
+INSERT INTO Team VALUES ('TM09' , 'Speed Hunters', 'SP09'); 
+
+INSERT INTO Team VALUES ('TM10' , 'Cherry Bomb', 'SP10'); 
+
+INSERT INTO Team VALUES ('TM11' , 'Takraw Stars', 'SP11'); 
+
+INSERT INTO Team VALUES ('TM12' , 'Squash Smashers', 'SP12'); 
+
+INSERT INTO Team VALUES ('TM13' , 'Handball Heroes', 'SP13'); 
+
+INSERT INTO Team VALUES ('TM14' , 'Petanque Elite', 'SP14'); 
+
+INSERT INTO Team VALUES ('TM15' , 'Cricket Champions', 'SP15'); 
+
+INSERT INTO Coach VALUES ('CH01' , 'Musa', 'Kareem', 'TM01'); 
+
+INSERT INTO Coach VALUES ('CH02' , 'Adam', 'Yusoff', 'TM02'); 
+
+INSERT INTO Coach VALUES ('CH03' , 'Farid', 'Omar', 'TM03'); 
+
+INSERT INTO Coach VALUES ('CH04' , 'Imran', 'Salim', 'TM04'); 
+
+INSERT INTO Coach VALUES ('CH05' , 'Amir', 'Hakim', 'TM05'); 
+
+INSERT INTO Coach VALUES ('CH06' , 'Syed', 'Kamal', 'TM06'); 
+
+INSERT INTO Coach VALUES ('CH07' , 'Ahmad', 'Ibrahim', 'TM07'); 
+
+INSERT INTO Coach VALUES ('CH08' , 'Saiful', 'Hassan', 'TM08'); 
+
+INSERT INTO Coach VALUES ('CH09' , 'Syukri', 'Yahya', 'TM09'); 
+
+INSERT INTO Coach VALUES ('CH10' , 'Aida', 'Balqis', 'TM10'); 
+
+INSERT INTO Coach VALUES ('CH11' , 'Dylan', 'Lee', 'TM11'); 
+
+INSERT INTO Coach VALUES ('CH12' , 'Hafiz', 'Hamid', 'TM12'); 
+
+INSERT INTO Coach VALUES ('CH13' , 'Samantha', 'Tan', 'TM13'); 
+
+INSERT INTO Coach VALUES ('CH14' , 'Farhana', 'Ali', 'TM14'); 
+
+INSERT INTO Coach VALUES ('CH15' , 'Rashid', 'Mat', 'TM15'); 
+
+INSERT INTO Player VALUES (2510001, 'PL01' , 'Muhd', 'Fadhil', 'TM01' , 'CH01' , 'SP01'); 
+
+INSERT INTO Player VALUES (2510002, 'PL02' , 'Ahmad', 'Maher', 'TM02' , 'CH02' , 'SP02'); 
+
+INSERT INTO Player VALUES (2510003, 'PL03' , 'Sara', 'Liyana', 'TM03' , 'CH03' , 'SP03'); 
+
+INSERT INTO Player VALUES (2510004, 'PL04' , 'Izat', 'Haikal', 'TM04' , 'CH04' , 'SP04'); 
+
+INSERT INTO Player VALUES (2510005, 'PL05' , 'Hadi', 'Rafiq', 'TM05' , 'CH05' , 'SP05'); 
+
+INSERT INTO Player VALUES (2510006, 'PL06' , 'Amin', 'Mokhtar', 'TM06' , 'CH06' , 'SP06'); 
+
+INSERT INTO Player VALUES (2510007, 'PL07' , 'Syah', 'Daniel', 'TM07' , 'CH07' , 'SP07'); 
+
+INSERT INTO Player VALUES (2510008, 'PL08' , 'Badrul', 'Hakim', 'TM08' , 'CH08' , 'SP08'); 
+
+INSERT INTO Player VALUES (2510009, 'PL09' , 'Zayn', 'Malek', 'TM09' , 'CH09' , 'SP09'); 
+
+INSERT INTO Player VALUES (2510010, 'PL10' , 'Siti', 'Khadijah', 'TM10' , 'CH10' , 'SP10'); 
+
+INSERT INTO Player VALUES (2510011, 'PL11' , 'Hana', 'Syahirah', 'TM11' , 'CH11' , 'SP11'); 
+
+INSERT INTO Player VALUES (2510012, 'PL12' , 'Izz', 'Iskandar', 'TM01' , 'CH01' , 'SP01'); 
+
+INSERT INTO Player VALUES (2510013, 'PL13' , 'Muhd', 'Syahmie', 'TM01' , 'CH01' , 'SP01'); 
+
+INSERT INTO Player VALUES (2510014, 'PL14' , 'Joe', 'Faridzul', 'TM02' , 'CH02' , 'SP02'); 
+
+INSERT INTO Player VALUES (2510015, 'PL15' , 'Fahim', 'Ikhwan', 'TM06' , 'CH06' , 'SP06'); 
+
+INSERT INTO Player VALUES (2510016, 'PL16' , 'Adib', 'Fahmi', 'TM07' , 'CH07' , 'SP07'); 
+
+INSERT INTO Player VALUES (2510017, 'PL17' , 'Leong', 'Wei', 'TM08' , 'CH08' , 'SP08'); 
+
+INSERT INTO Player VALUES (2510018, 'PL18' , 'Syafiq', 'Nasir', 'TM11' , 'CH11' , 'SP11'); 
+
+INSERT INTO Player VALUES (2510019, 'PL19' , 'Fathi', 'Hussein', 'TM13' , 'CH13' , 'SP13'); 
+
+INSERT INTO Player VALUES (2510020, 'PL20' , 'Meor', 'Haziq', 'TM15' , 'CH15' , 'SP15'); 
+
+INSERT INTO Player VALUES (2510021, 'PL21' , 'Aiman', 'Junaidi', 'TM12' , 'CH12' , 'SP12'); 
+
+INSERT INTO Player VALUES (2510022, 'PL22' , 'Nadia', 'Amni', 'TM14' , 'CH14' , 'SP14'); 
